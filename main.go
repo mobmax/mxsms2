@@ -66,6 +66,11 @@ func main() {
 			logEntry.WithError(err).Fatal("Error connecting to MySQL")
 		}
 		// zabbixLog = zabbix.New(config.SMSGate.ZabbixHost)
+		zabbixLog = config.SMSGate.SMPP.Zabbix
+		zabEntry := llog.WithField("host", zabbixLog.Host)
+		zabEntry.WithField("server", zabbixLog.Server).Info("Zabbix")
+		// zabbixLog.Send("gw.sms.unknown.destination", "79670238554")
+
 		config.SMSGate.SMPP.Zabbix = config.SMSGate.Zabbix
 
 		config.MXConnect()       // запускаем асинхронно соединение с MX
